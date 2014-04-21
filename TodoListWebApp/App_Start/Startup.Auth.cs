@@ -61,9 +61,9 @@ namespace TodoListWebApp
 
                             if (
                                 // the caller comes from an admin-consented, recorded issuer
-                                (db.Tenants.FirstOrDefault(a => ((a.IssValue == issuer) && (a.AdminConsented))) == null)
+                                (db.Tenants.FirstOrDefault(tenant => tenant.IssValue == issuer && tenant.AdminConsented) == null
                                 // the caller is recorded in the db of users who went through the individual onboardoing
-                                && (db.Users.FirstOrDefault(b =>((b.UPN == UPN) && (b.TenantID == tenantID))) == null)
+                                && db.Users.FirstOrDefault(user => user.UPN == UPN && user.TenantID == tenantID) == null
                                 )
                                 // the caller was neither from a trusted issuer or a registered user - throw to block the authentication flow
                                 throw new SecurityTokenValidationException();                            
